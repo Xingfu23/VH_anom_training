@@ -1,11 +1,8 @@
-from re import S
 import numpy as np
 import pandas as pd
 import uproot
-import awkward as ak
 from sklearn.model_selection import train_test_split
 from sklearn import metrics
-from sklearn.feature_selection import SelectFromModel
 import xgboost as xgb
 from pandas import MultiIndex, Int16Dtype
 import random
@@ -136,7 +133,6 @@ def main():
 
         # prepare empty lists for storing accuracy score imformation
         # and ROC curve indormations for different featuring paramenter set
-
         predict_acc = []
         fpr_test_list = []
         tpr_test_list = []
@@ -153,8 +149,6 @@ def main():
             acsig_com = pd.concat([acsig, acsig_stxsbdt], axis=1)
 
             # Adding filter for different STXS bin
-            # smsig_com = smsig_com.loc[smsig_com['stxs_bdtscore']>0.76].reset_index(drop=True)
-            # acsig_com = acsig_com.loc[acsig_com['stxs_bdtscore']>0.76].reset_index(drop=True)
             smsig_com['sig/bkg'] = 0
             acsig_com['sig/bkg'] = 1
 
@@ -162,6 +156,7 @@ def main():
             photondata_com = pd.concat([smsig_com, acsig_com], ignore_index=True, axis=0)
             print(photondata_com)
 
+            # Seperate training dataset(70%) and testing dataset(15% for validation, and another 15% for testing)
             X, y = photondata_com.iloc[:, :-2], photondata_com['sig/bkg'] # drop bdtscore information
             X_train, X_tmp, y_train, y_tmp   = train_test_split(X, y, test_size=0.7, random_state=random.randint(0,42))
             X_valid, X_test, y_valid, y_test = train_test_split(X_tmp, y_tmp, test_size=0.5)
@@ -191,7 +186,7 @@ def main():
                     verbose               = True
             )
 
-            # *Output model for TMVA
+            # *Output model's xml for TMVA reader
             model = XGBEngine.get_booster().get_dump()
             Output_xml = 'output_{}_{}'.format(Prob_hist_title[channel_type][0], varset_name[setentry])
             convert_model(
