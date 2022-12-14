@@ -42,7 +42,7 @@ def main():
         tree_smsig = file_smsig[tree_loc]
         tree_acsig = file_acsig[tree_loc]
 
-        # dataset_set = [
+        # dataset = [
         #     "pho1_eta",
         #     "pho2_eta",
         #     "pho1_phi",
@@ -61,7 +61,7 @@ def main():
         #     "min_dphi_jet_met",
         # ]
 
-        # dataset_set_forxml = [
+        # dataset_forxml = [
         #     ("pho1_eta", "F"),
         #     ("pho2_eta", "F"),
         #     ("pho1_phi", "F"),
@@ -80,7 +80,7 @@ def main():
         #     ("min_dphi_jet_met", "F"),
         # ]
 
-        dataset_set = [
+        dataset = [
             "pho1_eta",
             "pho2_eta",
             "pho1_phi",
@@ -104,7 +104,7 @@ def main():
             "min_dphi_jet_met",
         ]
 
-        dataset_set_forxml = [
+        dataset_forxml = [
             ("pho1_eta", "F"),
             ("pho2_eta", "F"),
             ("pho1_phi", "F"),
@@ -128,8 +128,8 @@ def main():
             ("min_dphi_jet_met", "F"),
         ]
 
-        featvarset = [dataset_set]
-        featvarset_forxml = [dataset_set_forxml]
+        featvarset = [dataset]
+        featvarset_forxml = [dataset_forxml]
 
         # prepare empty lists for storing accuracy score imformation
         # and ROC curve indormations for different featuring paramenter set
